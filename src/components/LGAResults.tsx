@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ElectionCard } from "@/components/ui/election-card";
 import { StatsCard } from "@/components/ui/stats-card";
-import { mockLGAs, mockPollingUnits, mockResults, mockParties } from "@/data/mock-election-data";
+import { mockLGAs, mockPollingUnits, storedResults, mockParties } from "@/data/mock-election-data";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
 
 export function LGAResults() {
@@ -22,7 +22,7 @@ export function LGAResults() {
     const pollingUnitIds = lgaPollingUnits.map(unit => unit.uniqueid);
     
     // Find all results for polling units in this LGA
-    const lgaVotes = mockResults.filter(result => 
+    const lgaVotes = storedResults.filter(result => 
       pollingUnitIds.includes(result.polling_unit_uniqueid)
     );
 

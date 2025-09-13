@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ElectionCard } from "@/components/ui/election-card";
 import { StatsCard } from "@/components/ui/stats-card";
-import { mockPollingUnits, mockResults, mockParties, AnnouncedPuResult, PollingUnit } from "@/data/mock-election-data";
+import { mockPollingUnits, storedResults, mockParties, AnnouncedPuResult, PollingUnit } from "@/data/mock-election-data";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export function PollingUnitResults() {
@@ -13,7 +13,7 @@ export function PollingUnitResults() {
   
   const selectedUnit = mockPollingUnits.find(unit => unit.uniqueid.toString() === selectedPollingUnit);
   const unitResults = selectedPollingUnit 
-    ? mockResults.filter(result => result.polling_unit_uniqueid.toString() === selectedPollingUnit)
+    ? storedResults.filter(result => result.polling_unit_uniqueid.toString() === selectedPollingUnit)
     : [];
 
   // Calculate statistics

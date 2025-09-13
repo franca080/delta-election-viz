@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ElectionCard } from "@/components/ui/election-card";
 import { StatsCard } from "@/components/ui/stats-card";
 import { useToast } from "@/hooks/use-toast";
-import { mockPollingUnits, mockParties, mockResults } from "@/data/mock-election-data";
+import { mockPollingUnits, mockParties, addNewResults } from "@/data/mock-election-data";
 import { Plus, Save, Trash2 } from "lucide-react";
 
 const resultSchema = z.object({
@@ -88,12 +88,23 @@ export function StoreResults() {
       return;
     }
 
-    // In a real application, this would save to a database
-    console.log("Saving results:", currentResults);
+    // Save results to the global store
+    const resultsToSave = currentResults.map(result => ({
+      polling_unit_uniqueid: parseInt(result.polling_unit_uniqueid),
+      party_abbreviation: result.party_abbreviation,
+      party_score: result.party_score,
+      entered_by_user: "admin",
+      date_entered: new Date().toISOString().replace('T', ' ').slice(0, 19),
+      user_ip_address: "192.168.1.100"
+    }));
+
+    const savedResults = addNewResults(resultsToSave);
+    console.log("Successfully saved results:", savedResults);
     
     toast({
-      title: "Results Saved Successfully",
-      description: `Saved ${currentResults.length} results for ${selectedUnit?.polling_unit_name}`,
+      title: "Results Saved Successfully!",
+      description: `Saved ${currentResults.length} results for ${selectedUnit?.polling_unit_name}. Total results now: ${savedResults.length}`,
+      variant: "default",
     });
 
     // Clear the form
